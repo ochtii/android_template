@@ -101,22 +101,41 @@ org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3
 
 ### Voraussetzungen
 
-- Android Studio Hedgehog (2023.1.1) oder neuer
-- JDK 8 oder höher
-- Android SDK 34
-- Minimum SDK 24 (Android 7.0)
+- **Android Studio**: Hedgehog (2023.1.1) oder neuer
+- **JDK**: 21 (Temurin/OpenJDK)
+- **Android SDK**: API Level 34
+- **Minimum SDK**: API Level 24 (Android 7.0)
+
+### Android SDK Setup
+
+**Für lokale Entwicklung:**
+1. Android Studio öffnen
+2. SDK Manager öffnen (Tools → SDK Manager)
+3. Android SDK Build-Tools 34.0.0 installieren
+4. Android SDK Platform 34 installieren
+5. Android SDK Command-line Tools installieren
+
+**SDK Pfad konfigurieren:**
+Bearbeiten Sie `local.properties`:
+```properties
+sdk.dir=/Users/IhrName/Library/Android/sdk  # macOS
+# oder
+sdk.dir=C:\\Users\\IhrName\\AppData\\Local\\Android\\Sdk  # Windows
+# oder
+sdk.dir=/home/IhrName/Android/Sdk  # Linux
+```
 
 ### Installation
 
 1. Repository klonen:
 ```bash
-git clone https://github.com/yourusername/android_template.git
+git clone https://github.com/ochtii/android_template.git
 cd android_template
 ```
 
 2. Projekt in Android Studio öffnen
 
-3. Gradle Sync durchführen
+3. Gradle Sync durchführen (Android Studio macht das automatisch)
 
 4. App auf Emulator oder Gerät ausführen
 
