@@ -39,10 +39,16 @@ class MainActivity : AppCompatActivity() {
         val application = application as TemplateApplication
         val isDarkTheme by application.userPreferencesRepository.isDarkTheme.collectAsState(initial = false)
         val accentColor by application.userPreferencesRepository.accentColor.collectAsState(initial = "default")
+        val highContrastEnabled by application.userPreferencesRepository.highContrastEnabled.collectAsState(initial = false)
+        val largeTextEnabled by application.userPreferencesRepository.largeTextEnabled.collectAsState(initial = false)
+        val colorBlindMode by application.userPreferencesRepository.colorBlindMode.collectAsState(initial = "none")
         
         AndroidTemplateTheme(
             darkTheme = isDarkTheme,
-            accentColor = accentColor
+            accentColor = accentColor,
+            highContrast = highContrastEnabled,
+            largeText = largeTextEnabled,
+            colorBlindMode = colorBlindMode
         ) {
             Surface(
                 modifier = Modifier.fillMaxSize(),

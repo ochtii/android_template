@@ -119,3 +119,75 @@ val Typography = Typography(
         letterSpacing = 0.5.sp
     )
 )
+
+/**
+ * Gibt skalierte Typography zurück basierend auf der großen Schrift-Einstellung
+ */
+fun getTypography(largeText: Boolean): Typography {
+    if (!largeText) return Typography
+
+    val scaleFactor = 1.2f // 20% größer
+
+    return Typography(
+        displayLarge = Typography.displayLarge.copy(
+            fontSize = Typography.displayLarge.fontSize * scaleFactor,
+            lineHeight = Typography.displayLarge.lineHeight * scaleFactor
+        ),
+        displayMedium = Typography.displayMedium.copy(
+            fontSize = Typography.displayMedium.fontSize * scaleFactor,
+            lineHeight = Typography.displayMedium.lineHeight * scaleFactor
+        ),
+        displaySmall = Typography.displaySmall.copy(
+            fontSize = Typography.displaySmall.fontSize * scaleFactor,
+            lineHeight = Typography.displaySmall.lineHeight * scaleFactor
+        ),
+        headlineLarge = Typography.headlineLarge.copy(
+            fontSize = Typography.headlineLarge.fontSize * scaleFactor,
+            lineHeight = Typography.headlineLarge.lineHeight * scaleFactor
+        ),
+        headlineMedium = Typography.headlineMedium.copy(
+            fontSize = Typography.headlineMedium.fontSize * scaleFactor,
+            lineHeight = Typography.headlineMedium.lineHeight * scaleFactor
+        ),
+        headlineSmall = Typography.headlineSmall.copy(
+            fontSize = Typography.headlineSmall.fontSize * scaleFactor,
+            lineHeight = Typography.headlineSmall.lineHeight * scaleFactor
+        ),
+        titleLarge = Typography.titleLarge.copy(
+            fontSize = Typography.titleLarge.fontSize * scaleFactor,
+            lineHeight = Typography.titleLarge.lineHeight * scaleFactor
+        ),
+        titleMedium = Typography.titleMedium.copy(
+            fontSize = Typography.titleMedium.fontSize * scaleFactor,
+            lineHeight = Typography.titleMedium.lineHeight * scaleFactor
+        ),
+        titleSmall = Typography.titleSmall.copy(
+            fontSize = Typography.titleSmall.fontSize * scaleFactor,
+            lineHeight = Typography.titleSmall.lineHeight * scaleFactor
+        ),
+        bodyLarge = Typography.bodyLarge.copy(
+            fontSize = Typography.bodyLarge.fontSize * scaleFactor,
+            lineHeight = Typography.bodyLarge.lineHeight * scaleFactor
+        ),
+        bodyMedium = Typography.bodyMedium.copy(
+            fontSize = Typography.bodyMedium.fontSize * scaleFactor,
+            lineHeight = Typography.bodyMedium.lineHeight * scaleFactor
+        ),
+        bodySmall = Typography.bodySmall.copy(
+            fontSize = Typography.bodySmall.fontSize * scaleFactor,
+            lineHeight = Typography.bodySmall.lineHeight * scaleFactor
+        ),
+        labelLarge = Typography.labelLarge.copy(
+            fontSize = Typography.labelLarge.fontSize * scaleFactor,
+            lineHeight = Typography.labelLarge.lineHeight * scaleFactor
+        ),
+        labelMedium = Typography.labelMedium.copy(
+            fontSize = Typography.labelMedium.fontSize * scaleFactor,
+            lineHeight = Typography.labelMedium.lineHeight * scaleFactor
+        ),
+        labelSmall = Typography.labelSmall.copy(
+            fontSize = Typography.labelSmall.fontSize * scaleFactor,
+            lineHeight = Typography.labelSmall.lineHeight * scaleFactor
+        )
+    )
+}

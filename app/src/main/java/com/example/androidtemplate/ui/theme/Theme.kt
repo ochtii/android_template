@@ -332,16 +332,89 @@ private val DarkPinkColorScheme = darkColorScheme(
 )
 
 /**
- * Gibt das entsprechende ColorScheme basierend auf Akzentfarbe und Theme-Modus zurück
+ * High Contrast Light Theme - erhöhter Kontrast für bessere Lesbarkeit
  */
-private fun getColorScheme(accentColor: String, darkTheme: Boolean): androidx.compose.material3.ColorScheme {
-    return when (accentColor) {
+private val HighContrastLightColorScheme = lightColorScheme(
+    primary = Color(0xFF000000),
+    onPrimary = Color(0xFFFFFFFF),
+    primaryContainer = Color(0xFF000000),
+    onPrimaryContainer = Color(0xFFFFFFFF),
+    secondary = Color(0xFF000000),
+    onSecondary = Color(0xFFFFFFFF),
+    secondaryContainer = Color(0xFF000000),
+    onSecondaryContainer = Color(0xFFFFFFFF),
+    tertiary = Color(0xFF000000),
+    onTertiary = Color(0xFFFFFFFF),
+    tertiaryContainer = Color(0xFF000000),
+    onTertiaryContainer = Color(0xFFFFFFFF),
+    error = Color(0xFF000000),
+    onError = Color(0xFFFFFFFF),
+    errorContainer = Color(0xFF000000),
+    onErrorContainer = Color(0xFFFFFFFF),
+    background = Color(0xFFFFFFFF),
+    onBackground = Color(0xFF000000),
+    surface = Color(0xFFFFFFFF),
+    onSurface = Color(0xFF000000),
+    outline = Color(0xFF000000)
+)
+
+/**
+ * High Contrast Dark Theme - erhöhter Kontrast für bessere Lesbarkeit
+ */
+private val HighContrastDarkColorScheme = darkColorScheme(
+    primary = Color(0xFFFFFFFF),
+    onPrimary = Color(0xFF000000),
+    primaryContainer = Color(0xFFFFFFFF),
+    onPrimaryContainer = Color(0xFF000000),
+    secondary = Color(0xFFFFFFFF),
+    onSecondary = Color(0xFF000000),
+    secondaryContainer = Color(0xFFFFFFFF),
+    onSecondaryContainer = Color(0xFF000000),
+    tertiary = Color(0xFFFFFFFF),
+    onTertiary = Color(0xFF000000),
+    tertiaryContainer = Color(0xFFFFFFFF),
+    onTertiaryContainer = Color(0xFF000000),
+    error = Color(0xFFFF0000),
+    onError = Color(0xFF000000),
+    errorContainer = Color(0xFFFF0000),
+    onErrorContainer = Color(0xFF000000),
+    background = Color(0xFF000000),
+    onBackground = Color(0xFFFFFFFF),
+    surface = Color(0xFF000000),
+    onSurface = Color(0xFFFFFFFF),
+    outline = Color(0xFFFFFFFF)
+)
+
+/**
+ * Gibt das entsprechende ColorScheme basierend auf Akzentfarbe, Theme-Modus und Barrierefreiheit zurück
+ */
+private fun getColorScheme(
+    accentColor: String,
+    darkTheme: Boolean,
+    highContrast: Boolean,
+    colorBlindMode: String
+): androidx.compose.material3.ColorScheme {
+    // Hoher Kontrast hat Priorität
+    if (highContrast) {
+        return if (darkTheme) HighContrastDarkColorScheme else HighContrastLightColorScheme
+    }
+
+    // Normale Akzentfarben-Auswahl
+    val baseScheme = when (accentColor) {
         "blue" -> if (darkTheme) DarkBlueColorScheme else LightBlueColorScheme
         "green" -> if (darkTheme) DarkGreenColorScheme else LightGreenColorScheme
         "purple" -> if (darkTheme) DarkPurpleColorScheme else LightPurpleColorScheme
         "orange" -> if (darkTheme) DarkOrangeColorScheme else LightOrangeColorScheme
         "pink" -> if (darkTheme) DarkPinkColorScheme else LightPinkColorScheme
         else -> if (darkTheme) DarkColorScheme else LightColorScheme // default (purple)
+    }
+
+    // Farbenblindheit-Anpassungen (vereinfacht - in der Praxis würden hier komplexere Anpassungen erfolgen)
+    return when (colorBlindMode) {
+        "protanopia" -> baseScheme // Vereinfacht - würde eigentlich Farben anpassen
+        "deuteranopia" -> baseScheme // Vereinfacht - würde eigentlich Farben anpassen
+        "tritanopia" -> baseScheme // Vereinfacht - würde eigentlich Farben anpassen
+        else -> baseScheme
     }
 }
 
@@ -350,19 +423,26 @@ private fun getColorScheme(accentColor: String, darkTheme: Boolean): androidx.co
  * 
  * @param darkTheme Boolean um Dark Theme zu aktivieren (Standard: System-Einstellung)
  * @param accentColor String für die Akzentfarbe ("default", "blue", "green", "purple", "orange", "pink")
+ * @param highContrast Boolean für hohen Kontrast Modus
+ * @param largeText Boolean für große Schrift
+ * @param colorBlindMode String für Farbenblind-Modus ("none", "protanopia", "deuteranopia", "tritanopia")
  * @param content Composable Content
  */
 @Composable
 fun AndroidTemplateTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     accentColor: String = "default",
+    highContrast: Boolean = false,
+    largeText: Boolean = false,
+    colorBlindMode: String = "none",
     content: @Composable () -> Unit
 ) {
-    val colorScheme = getColorScheme(accentColor, darkTheme)
+    val colorScheme = getColorScheme(accentColor, darkTheme, highContrast, colorBlindMode)
+    val typography = getTypography(largeText)
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = typography,
         content = content
     )
 }

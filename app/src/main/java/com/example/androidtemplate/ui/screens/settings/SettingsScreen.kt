@@ -243,45 +243,6 @@ fun SettingsScreen() {
             }
         }
     }
-
-    // Über Sektion
-    Text(
-        text = "Über",
-        style = MaterialTheme.typography.titleMedium,
-        color = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.padding(bottom = 8.dp)
-    )
-
-    Card(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Column {
-            SettingItem(
-                icon = Icons.Default.Person,
-                title = "Entwickler",
-                subtitle = "ochtii",
-                onClick = {
-                    // Öffne GitHub Profil
-                    val intent = android.content.Intent(
-                        android.content.Intent.ACTION_VIEW,
-                        android.net.Uri.parse("https://github.com/ochtii")
-                    )
-                    context.startActivity(intent)
-                }
-            )
-
-            Divider()
-
-            SettingItem(
-                icon = Icons.Default.Info,
-                title = "Von",
-                subtitle = "OIDALabs (coming soon)",
-                onClick = {
-                    // Link kommt später - für jetzt nichts tun
-                }
-            )
-        }
-    }
     
     // Theme Dialog
     if (showThemeDialog) {
