@@ -23,24 +23,26 @@ jobs:
 
     - name: Setup Android SDK
       run: |
+        # Set Android SDK path first
+        echo "ANDROID_HOME=/opt/android-sdk" >> $GITHUB_ENV
+
         # Download and setup Android SDK
         wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O android-sdk.zip
-        mkdir -p $ANDROID_HOME
-        unzip -q android-sdk.zip -d $ANDROID_HOME
-        mv $ANDROID_HOME/cmdline-tools $ANDROID_HOME/latest
-        mkdir -p $ANDROID_HOME/cmdline-tools
-        mv $ANDROID_HOME/latest $ANDROID_HOME/cmdline-tools/latest
+        mkdir -p /opt/android-sdk
+        unzip -q android-sdk.zip -d /opt/android-sdk
+        mv /opt/android-sdk/cmdline-tools /opt/android-sdk/latest
+        mkdir -p /opt/android-sdk/cmdline-tools
+        mv /opt/android-sdk/latest /opt/android-sdk/cmdline-tools/latest
 
-        # Set environment variables
-        echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
-        echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
-        echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
+        # Add to PATH
+        echo "/opt/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
+        echo "/opt/android-sdk/platform-tools" >> $GITHUB_PATH
 
         # Accept licenses
-        yes | sdkmanager --licenses > /dev/null
+        yes | /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null
 
         # Install required components
-        sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+        /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
     - name: Create local.properties
       run: echo "sdk.dir=$ANDROID_HOME" > local.properties
