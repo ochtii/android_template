@@ -1,7 +1,6 @@
 package com.example.androidtemplate.ui.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
@@ -28,7 +27,7 @@ sealed class NavigationDestination(
     object Dashboard : NavigationDestination(
         route = "dashboard",
         title = "Dashboard",
-        icon = Icons.Default.Dashboard
+        icon = Icons.Default.Home
     )
 
     object Profile : NavigationDestination(

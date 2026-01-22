@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BarChart
-import androidx.compose.material.icons.filled.ShowChart
-import androidx.compose.material.icons.filled.TrendingUp
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -45,7 +45,7 @@ fun DashboardScreen() {
 
         // Statistik-Karten
         DashboardCard(
-            icon = Icons.Default.TrendingUp,
+            icon = Icons.Default.Add,
             title = "Statistik 1",
             value = "1,234",
             description = "Gesamtanzahl",
@@ -55,7 +55,7 @@ fun DashboardScreen() {
         Spacer(modifier = Modifier.height(12.dp))
         
         DashboardCard(
-            icon = Icons.Default.BarChart,
+            icon = Icons.Default.Star,
             title = "Statistik 2",
             value = "567",
             description = "Aktive Einträge",
@@ -65,7 +65,7 @@ fun DashboardScreen() {
         Spacer(modifier = Modifier.height(12.dp))
         
         DashboardCard(
-            icon = Icons.Default.ShowChart,
+            icon = Icons.Default.Favorite,
             title = "Statistik 3",
             value = "89%",
             description = "Erfolgsrate",

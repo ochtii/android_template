@@ -6,10 +6,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.PhoneAndroid
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -61,9 +60,9 @@ fun SettingsScreen() {
         ) {
             SettingItem(
                 icon = when (currentThemeMode) {
-                    AppCompatDelegate.MODE_NIGHT_YES -> Icons.Default.DarkMode
-                    AppCompatDelegate.MODE_NIGHT_NO -> Icons.Default.LightMode
-                    else -> Icons.Default.PhoneAndroid
+                    AppCompatDelegate.MODE_NIGHT_YES -> Icons.Default.Settings
+                    AppCompatDelegate.MODE_NIGHT_NO -> Icons.Default.Info
+                    else -> Icons.Default.Notifications
                 },
                 title = "Theme",
                 subtitle = when (currentThemeMode) {
