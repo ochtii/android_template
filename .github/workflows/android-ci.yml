@@ -21,18 +21,38 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
 
+    - name: Cache Gradle packages
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    - name: Cache Android SDK
+      uses: actions/cache@v4
+      with:
+        path: /opt/android-sdk
+        key: ${{ runner.os }}-android-sdk-${{ hashFiles('**/build.gradle*') }}
+        restore-keys: |
+          ${{ runner.os }}-android-sdk-
+
     - name: Setup Android SDK
       run: |
         # Set Android SDK path first
         echo "ANDROID_HOME=/opt/android-sdk" >> $GITHUB_ENV
 
-        # Download and setup Android SDK
-        wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O android-sdk.zip
-        mkdir -p /opt/android-sdk
-        unzip -q android-sdk.zip -d /opt/android-sdk
-        mv /opt/android-sdk/cmdline-tools /opt/android-sdk/latest
-        mkdir -p /opt/android-sdk/cmdline-tools
-        mv /opt/android-sdk/latest /opt/android-sdk/cmdline-tools/latest
+        # Download and setup Android SDK only if not cached
+        if [ ! -d "/opt/android-sdk/cmdline-tools/latest" ]; then
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O android-sdk.zip
+          mkdir -p /opt/android-sdk
+          unzip -q android-sdk.zip -d /opt/android-sdk
+          mv /opt/android-sdk/cmdline-tools /opt/android-sdk/latest
+          mkdir -p /opt/android-sdk/cmdline-tools
+          mv /opt/android-sdk/latest /opt/android-sdk/cmdline-tools/latest
+        fi
 
         # Add to PATH
         echo "/opt/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
@@ -51,10 +71,7 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build with Gradle
-      run: ./gradlew build --no-daemon --stacktrace --info
-
-    - name: Build Debug APK
-      run: ./gradlew assembleDebug --no-daemon --stacktrace
+      run: ./gradlew build --no-daemon
 
     - name: Upload Debug APK
       uses: actions/upload-artifact@v4
@@ -63,7 +80,11 @@ jobs:
         path: app/build/outputs/apk/debug/*.apk
         retention-days: 30
 
-    - name: Build Release APK (unsigned)
-      run: ./gradlew assembleRelease --no-daemon --stacktrace
+    - name: Upload Release APK (unsigned)
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-template-release
+        path: app/build/outputs/apk/release/*.apk
+        retention-days: 30
       continue-on-error: true
 
