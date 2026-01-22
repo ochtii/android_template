@@ -110,15 +110,41 @@ org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3
 
 1. Repository klonen:
 ```bash
-git clone https://github.com/yourusername/android_template.git
+git clone https://github.com/ochtii/android_template.git
 cd android_template
 ```
 
 2. Projekt in Android Studio öffnen
+   - File → Open → android_template-Verzeichnis auswählen
 
 3. Gradle Sync durchführen
+   - Android Studio führt dies automatisch durch
+   - Oder manuell: File → Sync Project with Gradle Files
 
 4. App auf Emulator oder Gerät ausführen
+   - Run → Run 'app' oder Shift+F10
+
+**Hinweis:** Der erste Build kann einige Minuten dauern, da Gradle alle Dependencies herunterlädt.
+
+### Build von der Kommandozeile
+
+```bash
+# Debug APK erstellen
+./gradlew assembleDebug
+
+# Release APK erstellen (unsigned)
+./gradlew assembleRelease
+
+# Tests ausführen
+./gradlew test
+
+# APK installieren und starten
+./gradlew installDebug
+```
+
+Die erstellten APKs finden Sie unter:
+- Debug: `app/build/outputs/apk/debug/app-debug.apk`
+- Release: `app/build/outputs/apk/release/app-release-unsigned.apk`
 
 ### Anpassung
 
