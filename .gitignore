@@ -1,0 +1,42 @@
+.gradle/
+.idea/
+local.properties
+*.iml
+*.apk
+*.ap_
+*.aab
+
+# Build outputs
+build/
+*/build/
+out/
+
+# Gradle
+.gradle
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+
+# Android Studio
+.idea/
+*.iml
+.externalNativeBuild
+.cxx
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Keystore files
+*.jks
+*.keystore
+
+# Log files
+*.log
+
+# NDK
+obj/
+
+# Signing files
+signing.properties
+keystore.properties

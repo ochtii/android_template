@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">Android Template</string>
+    
+    <!-- Navigation -->
+    <string name="nav_home">Startseite</string>
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_profile">Profil</string>
+    <string name="nav_settings">Einstellungen</string>
+    <string name="nav_about">Über</string>
+    
+    <!-- Drawer Menu -->
+    <string name="drawer_open">Navigation öffnen</string>
+    <string name="drawer_close">Navigation schließen</string>
+    <string name="drawer_header_title">Android Template</string>
+    <string name="drawer_header_subtitle">Version 1.0.0</string>
+    
+    <!-- Home Screen -->
+    <string name="home_title">Willkommen</string>
+    <string name="home_description">Dies ist ein Template für Android-Anwendungen mit Navigation Drawer und Bottom Navigation.</string>
+    <string name="home_features_title">Features</string>
+    <string name="home_feature_navigation">✓ Bottom Navigation &amp; Drawer Menu</string>
+    <string name="home_feature_theme">✓ Dark/Light Theme Support</string>
+    <string name="home_feature_settings">✓ Einstellungen mit DataStore</string>
+    <string name="home_feature_modular">✓ Modulare Architektur</string>
+    
+    <!-- Dashboard Screen -->
+    <string name="dashboard_title">Dashboard</string>
+    <string name="dashboard_description">Hier können Sie Ihre Dashboard-Widgets hinzufügen.</string>
+    <string name="dashboard_card_1_title">Statistik 1</string>
+    <string name="dashboard_card_2_title">Statistik 2</string>
+    <string name="dashboard_card_3_title">Statistik 3</string>
+    
+    <!-- Profile Screen -->
+    <string name="profile_title">Profil</string>
+    <string name="profile_description">Benutzerprofil und Kontoinformationen</string>
+    <string name="profile_username">Benutzername</string>
+    <string name="profile_email">E-Mail</string>
+    <string name="profile_edit">Profil bearbeiten</string>
+    
+    <!-- Settings Screen -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_appearance">Darstellung</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_theme_light">Hell</string>
+    <string name="settings_theme_dark">Dunkel</string>
+    <string name="settings_general">Allgemein</string>
+    <string name="settings_notifications">Benachrichtigungen</string>
+    <string name="settings_notifications_enabled">Benachrichtigungen aktiviert</string>
+    <string name="settings_language">Sprache</string>
+    
+    <!-- About Screen -->
+    <string name="about_title">Über die App</string>
+    <string name="about_version">Version</string>
+    <string name="about_version_value">1.0.0</string>
+    <string name="about_developer">Entwickler</string>
+    <string name="about_developer_value">Ihr Name</string>
+    <string name="about_description">Android Template Applikation</string>
+    <string name="about_description_value">Ein modulares Template für Android-Apps mit Navigation Drawer, Bottom Navigation und Theme-Support.</string>
+    <string name="about_license">Lizenz</string>
+    <string name="about_license_value">MIT License</string>
+    
+    <!-- Common -->
+    <string name="action_save">Speichern</string>
+    <string name="action_cancel">Abbrechen</string>
+    <string name="action_ok">OK</string>
+    <string name="error_generic">Ein Fehler ist aufgetreten</string>
+</resources>
