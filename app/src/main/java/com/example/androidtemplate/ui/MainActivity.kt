@@ -11,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
+import androidx.compose.ui.graphics.toArgb
 import com.example.androidtemplate.TemplateApplication
 import com.example.androidtemplate.ui.navigation.AppNavigation
 import com.example.androidtemplate.ui.theme.AndroidTemplateTheme
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         val highContrastEnabled by application.userPreferencesRepository.highContrastEnabled.collectAsState(initial = false)
         val largeTextEnabled by application.userPreferencesRepository.largeTextEnabled.collectAsState(initial = false)
         val colorBlindMode by application.userPreferencesRepository.colorBlindMode.collectAsState(initial = "none")
+        val statusBarUsesAccentColor by application.userPreferencesRepository.statusBarUsesAccentColor.collectAsState(initial = false)
         
         AndroidTemplateTheme(
             darkTheme = isDarkTheme,
@@ -50,6 +52,14 @@ class MainActivity : AppCompatActivity() {
             largeText = largeTextEnabled,
             colorBlindMode = colorBlindMode
         ) {
+            // Statusleiste-Farbe setzen
+            val statusBarColor = if (statusBarUsesAccentColor) {
+                MaterialTheme.colorScheme.primary.toArgb()
+            } else {
+                MaterialTheme.colorScheme.surface.toArgb()
+            }
+            window.statusBarColor = statusBarColor
+            
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background

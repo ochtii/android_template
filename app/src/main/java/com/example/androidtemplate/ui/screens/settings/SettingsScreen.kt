@@ -20,6 +20,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.androidtemplate.TemplateApplication
 import kotlinx.coroutines.launch
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 
 /**
  * Einstellungen Screen
@@ -53,10 +59,27 @@ fun SettingsScreen() {
         .collectAsState(initial = "none")
     val reducedAnimationsEnabled by application.userPreferencesRepository.reducedAnimationsEnabled
         .collectAsState(initial = false)
+    val statusBarUsesAccentColor by application.userPreferencesRepository.statusBarUsesAccentColor
+        .collectAsState(initial = false)
     
     var showThemeDialog by remember { mutableStateOf(false) }
     var showAccentColorDialog by remember { mutableStateOf(false) }
     var showColorBlindDialog by remember { mutableStateOf(false) }
+    
+    // Berechtigung für Benachrichtigungen prüfen (nur Android 13+)
+    val hasNotificationPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+    } else {
+        true // Auf älteren Versionen immer erlaubt
+    }
+    
+    // Launcher für Berechtigungsnachfrage
+    val requestPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        // Berechtigung wurde erteilt oder abgelehnt
+        // Die UI wird automatisch aktualisiert durch den State-Flow
+    }
     
     Column(
         modifier = Modifier
@@ -216,11 +239,34 @@ fun SettingsScreen() {
                 SettingItemWithSwitch(
                     icon = Icons.Default.Notifications,
                     title = "System-Benachrichtigungen",
-                    subtitle = if (systemNotificationsEnabled) "System-Benachrichtigungen sind aktiviert" else "System-Benachrichtigungen sind deaktiviert",
-                    checked = systemNotificationsEnabled,
+                    subtitle = if (hasNotificationPermission) {
+                        if (systemNotificationsEnabled) "System-Benachrichtigungen sind aktiviert" else "System-Benachrichtigungen sind deaktiviert"
+                    } else {
+                        "Berechtigung erforderlich - tippen zum Anfordern"
+                    },
+                    checked = systemNotificationsEnabled && hasNotificationPermission,
+                    onCheckedChange = { enabled ->
+                        if (enabled && !hasNotificationPermission && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            // Berechtigung anfordern
+                            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                        } else {
+                            scope.launch {
+                                application.userPreferencesRepository.setSystemNotificationsEnabled(enabled)
+                            }
+                        }
+                    }
+                )
+
+                Divider()
+
+                SettingItemWithSwitch(
+                    icon = Icons.Default.Star,
+                    title = "Statusleiste Akzentfarbe",
+                    subtitle = "Statusleiste verwendet Akzentfarbe anstatt Theme-Farbe",
+                    checked = statusBarUsesAccentColor,
                     onCheckedChange = { enabled ->
                         scope.launch {
-                            application.userPreferencesRepository.setSystemNotificationsEnabled(enabled)
+                            application.userPreferencesRepository.setStatusBarUsesAccentColor(enabled)
                         }
                     }
                 )

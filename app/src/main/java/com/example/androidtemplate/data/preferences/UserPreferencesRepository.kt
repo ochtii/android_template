@@ -32,6 +32,7 @@ class UserPreferencesRepository(private val context: Context) {
         private val LARGE_TEXT_KEY = booleanPreferencesKey("large_text")
         private val COLOR_BLIND_MODE_KEY = stringPreferencesKey("color_blind_mode")
         private val REDUCED_ANIMATIONS_KEY = booleanPreferencesKey("reduced_animations")
+        private val STATUS_BAR_ACCENT_KEY = booleanPreferencesKey("status_bar_accent")
     }
 
     /**
@@ -113,6 +114,13 @@ class UserPreferencesRepository(private val context: Context) {
      */
     val reducedAnimationsEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
         preferences[REDUCED_ANIMATIONS_KEY] ?: false
+    }
+
+    /**
+     * Statusleiste verwendet Akzentfarbe
+     */
+    val statusBarUsesAccentColor: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[STATUS_BAR_ACCENT_KEY] ?: false
     }
 
     /**
@@ -212,6 +220,17 @@ class UserPreferencesRepository(private val context: Context) {
     suspend fun setReducedAnimationsEnabled(enabled: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[REDUCED_ANIMATIONS_KEY] = enabled
+        }
+    }
+
+    /**
+     * Statusleiste verwendet Akzentfarbe ein/aus schalten
+     *
+     * @param enabled true = Statusleiste verwendet Akzentfarbe, false = theme-basiert
+     */
+    suspend fun setStatusBarUsesAccentColor(enabled: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[STATUS_BAR_ACCENT_KEY] = enabled
         }
     }
 }
