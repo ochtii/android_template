@@ -39,7 +39,9 @@ fun SettingsScreen() {
     
     val currentThemeMode by application.userPreferencesRepository.themeMode
         .collectAsState(initial = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-    val notificationsEnabled by application.userPreferencesRepository.notificationsEnabled
+    val inAppNotificationsEnabled by application.userPreferencesRepository.inAppNotificationsEnabled
+        .collectAsState(initial = true)
+    val systemNotificationsEnabled by application.userPreferencesRepository.systemNotificationsEnabled
         .collectAsState(initial = true)
     val accentColor by application.userPreferencesRepository.accentColor
         .collectAsState(initial = "default")
@@ -192,17 +194,90 @@ fun SettingsScreen() {
         )
         
         Card(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
         ) {
-            SettingItemWithSwitch(
-                icon = Icons.Default.Notifications,
-                title = "Benachrichtigungen",
-                subtitle = "App-Benachrichtigungen aktivieren",
-                checked = notificationsEnabled,
-                onCheckedChange = { enabled ->
-                    scope.launch {
-                        application.userPreferencesRepository.setNotificationsEnabled(enabled)
+            Column {
+                SettingItemWithSwitch(
+                    icon = Icons.Default.Notifications,
+                    title = "In-App Benachrichtigungen",
+                    subtitle = "Zeigt Benachrichtigungen innerhalb der App an",
+                    checked = inAppNotificationsEnabled,
+                    onCheckedChange = { enabled ->
+                        scope.launch {
+                            application.userPreferencesRepository.setInAppNotificationsEnabled(enabled)
+                        }
                     }
+                )
+
+                Divider()
+
+                SettingItemWithSwitch(
+                    icon = Icons.Default.Notifications,
+                    title = "System-Benachrichtigungen",
+                    subtitle = if (systemNotificationsEnabled) "System-Benachrichtigungen sind aktiviert" else "System-Benachrichtigungen sind deaktiviert",
+                    checked = systemNotificationsEnabled,
+                    onCheckedChange = { enabled ->
+                        scope.launch {
+                            application.userPreferencesRepository.setSystemNotificationsEnabled(enabled)
+                        }
+                    }
+                )
+
+                Divider()
+
+                SettingItem(
+                    icon = Icons.Default.Settings,
+                    title = "Berechtigungseinstellungen",
+                    subtitle = "Android-Benachrichtigungseinstellungen öffnen",
+                    onClick = {
+                        // Öffne Android-Berechtigungseinstellungen
+                        val intent = android.content.Intent(
+                            android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                            android.net.Uri.parse("package:${context.packageName}")
+                        )
+                        context.startActivity(intent)
+                    }
+                )
+            }
+        }
+    }
+
+    // Über Sektion
+    Text(
+        text = "Über",
+        style = MaterialTheme.typography.titleMedium,
+        color = MaterialTheme.colorScheme.primary,
+        modifier = Modifier.padding(bottom = 8.dp)
+    )
+
+    Card(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column {
+            SettingItem(
+                icon = Icons.Default.Person,
+                title = "Entwickler",
+                subtitle = "ochtii",
+                onClick = {
+                    // Öffne GitHub Profil
+                    val intent = android.content.Intent(
+                        android.content.Intent.ACTION_VIEW,
+                        android.net.Uri.parse("https://github.com/ochtii")
+                    )
+                    context.startActivity(intent)
+                }
+            )
+
+            Divider()
+
+            SettingItem(
+                icon = Icons.Default.Info,
+                title = "Von",
+                subtitle = "OIDALabs (coming soon)",
+                onClick = {
+                    // Link kommt später - für jetzt nichts tun
                 }
             )
         }

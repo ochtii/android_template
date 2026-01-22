@@ -38,8 +38,12 @@ class MainActivity : AppCompatActivity() {
     private fun MainContent() {
         val application = application as TemplateApplication
         val isDarkTheme by application.userPreferencesRepository.isDarkTheme.collectAsState(initial = false)
+        val accentColor by application.userPreferencesRepository.accentColor.collectAsState(initial = "default")
         
-        AndroidTemplateTheme(darkTheme = isDarkTheme) {
+        AndroidTemplateTheme(
+            darkTheme = isDarkTheme,
+            accentColor = accentColor
+        ) {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background

@@ -25,6 +25,8 @@ class UserPreferencesRepository(private val context: Context) {
     companion object {
         private val THEME_MODE_KEY = intPreferencesKey("theme_mode")
         private val NOTIFICATIONS_ENABLED_KEY = booleanPreferencesKey("notifications_enabled")
+        private val IN_APP_NOTIFICATIONS_KEY = booleanPreferencesKey("in_app_notifications")
+        private val SYSTEM_NOTIFICATIONS_KEY = booleanPreferencesKey("system_notifications")
         private val ACCENT_COLOR_KEY = stringPreferencesKey("accent_color")
         private val HIGH_CONTRAST_KEY = booleanPreferencesKey("high_contrast")
         private val LARGE_TEXT_KEY = booleanPreferencesKey("large_text")
@@ -62,6 +64,20 @@ class UserPreferencesRepository(private val context: Context) {
      */
     val notificationsEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
         preferences[NOTIFICATIONS_ENABLED_KEY] ?: true
+    }
+
+    /**
+     * In-App Benachrichtigungen
+     */
+    val inAppNotificationsEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[IN_APP_NOTIFICATIONS_KEY] ?: true
+    }
+
+    /**
+     * System-Benachrichtigungen
+     */
+    val systemNotificationsEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[SYSTEM_NOTIFICATIONS_KEY] ?: true
     }
 
     /**
@@ -119,6 +135,28 @@ class UserPreferencesRepository(private val context: Context) {
     suspend fun setNotificationsEnabled(enabled: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[NOTIFICATIONS_ENABLED_KEY] = enabled
+        }
+    }
+
+    /**
+     * In-App Benachrichtigungen ein/aus schalten
+     * 
+     * @param enabled true = aktiviert, false = deaktiviert
+     */
+    suspend fun setInAppNotificationsEnabled(enabled: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[IN_APP_NOTIFICATIONS_KEY] = enabled
+        }
+    }
+
+    /**
+     * System-Benachrichtigungen ein/aus schalten
+     * 
+     * @param enabled true = aktiviert, false = deaktiviert
+     */
+    suspend fun setSystemNotificationsEnabled(enabled: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[SYSTEM_NOTIFICATIONS_KEY] = enabled
         }
     }
 
